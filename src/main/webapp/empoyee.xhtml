@@ -1,0 +1,119 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<h:outputStylesheet>
+            th, td {
+                text-align: center;
+            }
+
+            h3 {
+                margin-top: 0;
+                text-align: center;
+            }
+
+            input[type="text"] {
+                width: 100%;
+                box-sizing: border-box;
+                -webkit-box-sizing:border-box;
+                -moz-box-sizing: border-box;
+            }
+
+        </h:outputStylesheet>
+	</h:head>
+	<h:body>
+		<p:outputPanel>
+			<h3>Employee Overview</h3>
+			<div class="ui-g">
+				<div class="ui-g-2" />
+				<div class="ui-g-8">
+					<h:form id="employees">
+						<p:growl id="growl" sticky="true" />
+
+						<p:dataTable id="employeeList" var="employee"
+							value="#{employeesBacking.employees}">
+
+							<p:column headerText="Employee Code">
+								<h:inputText value="#{employee.employeeCode}" />
+							</p:column>
+							<p:column headerText="Name">
+								<p:inputText id="nameInput" value="#{employee.name}" />
+							</p:column>
+
+
+							<p:column headerText="Email">
+								<p:inputText id="emailInput" value="#{employee.email}" />
+							</p:column>
+
+
+
+							<p:column>
+								<p:commandButton update="employeeList" value="Delete"
+									icon="ui-icon-closethick"
+									action="#{employeesBacking.delete(employee)}"
+									styleClass="ui-priority-primary">
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+						<br />
+						<p:commandButton style="float: right" id="save" value="Save"
+							tyleClass="ui-priority-primary"
+							action="#{employeesBacking.update}" icon="ui-icon-disk"
+							update="growl">
+							<f:ajax execute="@form" render="@form" />
+						</p:commandButton>
+					</h:form>
+				</div>
+				<div class="ui-g-2"></div>
+			</div>
+			<h3>Create a new employee</h3>
+			<div class="ui-g">
+				<div class="ui-g-2"></div>
+				<div class="ui-g-8">
+					<h:form id="add">
+					<p:growl id="growl" sticky="true" />
+						<h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
+							<p:outputLabel for="firstName" value="First name" />
+							<p:inputText id="firstName"
+								value="#{employeesBacking.newEmployee.name}" />
+							
+							<p:message for="firstName" />
+
+
+							<p:outputLabel for="email" value="E-Mail" />
+							<p:inputText id="email"
+								value="#{employeesBacking.newEmployee.email}">
+							</p:inputText>
+							<p:message for="email" />
+
+							<p:outputLabel for="address" value="Employee Address" />
+							<p:inputText id="address"
+								value="#{employeesBacking.newEmployee.address}">
+							</p:inputText>
+							<p:message for="address" />
+
+							<p:outputLabel for="employeeCode" value="Employee Code" />
+							<p:inputText id="employeeCode"
+								value="#{employeesBacking.newEmployee.employeeCode}">
+
+							</p:inputText>
+							<p:message for="employeeCode" />
+
+							<p:commandButton style="float: right" id="add" value="Add"
+								styleClass="ui-priority-primary"
+								action="#{employeesBacking.add}" icon="ui-icon-disk"
+							update="growl">
+								<f:ajax execute="@form" render="@form" />
+							</p:commandButton>
+						</h:panelGrid>
+					</h:form>
+				</div>
+				<div class="ui-g-2"></div>
+			</div>
+		</p:outputPanel>
+	</h:body>
+</f:view>
+</html>
